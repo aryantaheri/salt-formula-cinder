@@ -48,6 +48,50 @@ enabled_backends={% for type in controller.get('types', []) %}{{ type.backend }}
 
 {%- endif %}
 
+# OpenStack privileged account username. Used for requests to
+# other services (such as Nova) that require an account with
+# special rights. (string value)
+#os_privileged_user_name=<None>
+os_privileged_user_name={{ controller.common.os_privileged_user_name }}
+ 
+# Password associated with the OpenStack privileged account.
+# (string value)
+#os_privileged_user_password=<None>
+os_privileged_user_password={{ controller.common.os_privileged_user_password }}
+ 
+# Tenant name associated with the OpenStack privileged
+# account. (string value)
+#os_privileged_user_tenant=<None>
+os_privileged_user_tenant={{ controller.common.os_privileged_user_tenant }}
+
+#
+# Options defined in cinder.compute.nova
+#
+ 
+# Match this value when searching for nova in the service
+# catalog. Format is: separated values of the form:
+# <service_type>:<service_name>:<endpoint_type> (string value)
+#nova_catalog_info=compute:Compute Service:publicURL
+ 
+# Same as nova_catalog_info, but for admin endpoint. (string
+# value)
+#nova_catalog_admin_info=compute:Compute Service:adminURL
+ 
+# Override service catalog lookup with template for nova
+# endpoint e.g. http://localhost:8774/v2/%(project_id)s
+# (string value)
+#nova_endpoint_template=<None>
+nova_endpoint_template=http://{{ controller.compute.nova_endpoint_host }}:{{ controller.compute.nova_endpoint_port }}/v2/%(project_id)s
+ 
+# Same as nova_endpoint_template, but for admin endpoint.
+# (string value)
+#nova_endpoint_admin_template=<None>
+nova_endpoint_admin_template=http://{{ controller.compute.nova_endpoint_admin_host }}:{{ controller.compute.nova_endpoint_admin_port }}/v2/%(project_id)s
+ 
+# Region name of this node (string value)
+#os_region_name=<None>
+os_region_name={{ controller.compute.os_region_name }}
+
 #RPC response timeout recommended by Hitachi
 rpc_response_timeout=3600
 
