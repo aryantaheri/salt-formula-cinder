@@ -44,3 +44,5 @@ parameters:
         nova_endpoint_admin_host: ${_param:nova_service_host}
         nova_endpoint_admin_port: 8774
         os_region_name: RegionOne
+      scheduler:
+        default_filters: 'AvailabilityZoneFilter,CapacityFilter,CapabilitiesFilter,InstanceLocalityFilter'

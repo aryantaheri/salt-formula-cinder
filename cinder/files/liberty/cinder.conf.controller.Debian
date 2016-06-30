@@ -92,6 +92,17 @@ nova_endpoint_admin_template=http://{{ controller.compute.nova_endpoint_admin_ho
 #os_region_name=<None>
 os_region_name={{ controller.compute.os_region_name }}
 
+#
+# Options defined in cinder.scheduler.host_manager
+#
+ 
+# Which filter class names to use for filtering hosts when not
+# specified in the request. (list value)
+#scheduler_default_filters=AvailabilityZoneFilter,CapacityFilter,CapabilitiesFilter
+{% if controller.scheduler is defined %}
+scheduler_default_filters={{ controller.scheduler.default_filters }}
+{% endif %}
+
 #RPC response timeout recommended by Hitachi
 rpc_response_timeout=3600
 
