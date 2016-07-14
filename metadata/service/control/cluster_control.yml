@@ -43,3 +43,15 @@ parameters:
           port: 11211
         - host: ${_param:cluster_node03_address}
           port: 11211
+      common:
+        os_privileged_user_name: nova
+        os_privileged_user_password: ${_param:keystone_nova_password}
+        os_privileged_user_tenant: service
+      compute:
+        nova_endpoint_host: ${_param:nova_service_host}
+        nova_endpoint_port: 8774
+        nova_endpoint_admin_host: ${_param:nova_service_host}
+        nova_endpoint_admin_port: 8774
+        os_region_name: RegionOne
+      scheduler:
+        default_filters: 'AvailabilityZoneFilter,CapacityFilter,CapabilitiesFilter,InstanceLocalityFilter'
