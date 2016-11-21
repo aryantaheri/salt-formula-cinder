@@ -66,6 +66,9 @@ log_dir=/var/log/cinder
 use_syslog=false
 verbose=True
 
+nova_catalog_admin_info = compute:nova:adminURL
+nova_catalog_info = compute:nova:publicURL
+
 [oslo_messaging_notifications]
 {%- if volume.notification %}
 driver = messagingv2
@@ -95,13 +98,17 @@ kombu_reconnect_delay=5.0
 signing_dir=/tmp/keystone-signing-cinder
 revocation_cache_time = 10
 auth_type = password
-user_domain_id = {{ volume.identity.get('domain', 'default') }}
-project_domain_id = {{ volume.identity.get('domain', 'default') }}
+user_domain_name = {{ volume.identity.get('domain', 'Default') }}
+project_domain_name = {{ volume.identity.get('domain', 'Default') }}
 project_name = {{ volume.identity.tenant }}
 username = {{ volume.identity.user }}
 password = {{ volume.identity.password }}
+
 auth_uri=http://{{ volume.identity.host }}:5000/v3
 auth_url=http://{{ volume.identity.host }}:35357/v3
+# Temporary disabled for backward compataiblity
+#auth_uri=http://{{ volume.identity.host }}/identity
+#auth_url=http://{{ volume.identity.host }}/identity_v2_admin
 {%- if volume.cache is defined %}
 memcached_servers={%- for member in volume.cache.members %}{{ member.host }}:11211{% if not loop.last %},{% endif %}{%- endfor %}
 {%- endif %}
